@@ -1,18 +1,16 @@
-{% extends "base.html.twig" %}
+{% extends "CoreBundle::layout.html.twig" %}
 
 {% block title %}
     Lecture d'une annonce - {{ parent() }}
 {% endblock %}
 
-{% block ocplatform_body %}
+{% block oc_platform_body %}
 
     <h2>{{ advert.title }}</h2>
     <i>Par {{ advert.author }}, le {{ advert.date|date('d/m/Y') }}</i>
-
     <div class="well">
         {{ advert.content }}
     </div>
-
     <p>
         <a href="{{ path('oc_platform_home') }}" class="btn btn-default">
             <i class="glyphicon glyphicon-chevron-left"></i>
@@ -27,5 +25,4 @@
             Supprimer l'annonce
         </a>
     </p>
-
 {% endblock %}

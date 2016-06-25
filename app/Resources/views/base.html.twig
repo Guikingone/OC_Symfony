@@ -39,6 +39,8 @@
 
             <h4>Dernières annonces</h4>
             {{ render(controller("CoreBundle:Advert:menu", {'limit': 3})) }}
+            <h2>Contact</h2>
+            <p><a href="{{ path('oc_platform_contact') }}">Nous contacter</a></p>
         </div>
         <div id="content" class="col-md-9">
             {% block body %}

@@ -1,6 +1,4 @@
-{# src/OC/PlatformBundle/Resources/views/layout.html.twig #}
-
-{% extends "base.html.twig" %}
+{% extends "CoreBundle::layout.html.twig" %}
 
 {% block title %}
     Annonces - {{ parent() }}
@@ -8,13 +6,24 @@
 
 {% block body %}
 
-    {# On définit un sous-titre commun à toutes les pages du bundle, par exemple #}
-    <h1>Annonces</h1>
+    {% for message in app.session.flashbag.get('notice') %}
+        <div class="alert alert-info text-center">Message flash : {{ message }}</div>
+    {% endfor %}
 
+    <h1>Liste des annonces</h1>
     <hr>
 
-    {# On définit un nouveau bloc, que les vues du bundle pourront remplir #}
-    {% block ocplatform_body %}
-    {% endblock %}
-
+    <ul>
+    {% for advert in listAdverts %}
+        <li>
+            <a href="{{ path('oc_platform_view', {'id': advert.id}) }}">
+                {{ advert.title }}
+            </a>
+            Par {{ advert.author }},
+            Le {{ advert.date|date('d/m/Y') }}
+        </li>
+        {% else %}
+        <li>Pas encore d'annonces</li>
+    {% endfor %}
+        </ul>
 {% endblock %}

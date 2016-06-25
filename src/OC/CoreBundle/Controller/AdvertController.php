@@ -8,11 +8,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/", name="home")
+ */
 class AdvertController extends Controller
 {
     /**
      * @return array
-     * @Route("/", name="oc_platform_home")
+     * @Route("/platform", name="oc_platform_home")
      * @Template("CoreBundle::index.html.twig")
      */
     public function indexAction()
@@ -37,7 +40,6 @@ class AdvertController extends Controller
                 'content' => 'Nous proposons un poste pour webdesigner. Blabla…',
                 'date'    => new \Datetime())
         );
-
         return array('listAdverts' => $listAdverts);
     }
 
@@ -60,24 +62,20 @@ class AdvertController extends Controller
     }
 
     /**
-     * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @Route("/add", name="oc_platform_add")
      * @Template("CoreBundle::add.html.twig")
      */
-    public function addAction()
-    {
-        $this->addFlash('notice', 'Annonce bien enregistrée.');
-        return $this->redirect('oc_platform_view');
-    }
+    public function addAction(){}
 
     /**
+     * @param $id
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @Route("/edit/{id}", name="oc_platform_edit", requirements={"id": "\d+"})
      * @Template("CoreBundle::edit.html.twig")
      */
-    public function editAction()
+    public function editAction($id)
     {
         $this->addFlash('notice', 'Annonce bien modifiée.');
         $advert = array(
@@ -87,8 +85,7 @@ class AdvertController extends Controller
             "content" => "Nous recherchons un développeur Symfony débutant sur Lyon. Blabla…",
             'date'    => new \Datetime()
         );
-
-        return $this->redirect('oc_platform_view', array('advert' => $advert));
+        return array('advert' => $advert);
     }
 
     /**
@@ -97,10 +94,7 @@ class AdvertController extends Controller
      * @Route("/delete/{id}", name="oc_platform_delete", requirements={"id": "\d+"})
      * @Template("CoreBundle::delete.html.twig")
      */
-    public function deleteAction($id)
-    {
-        return array('id' => $id);
-    }
+    public function deleteAction($id){ return array('id' => $id); }
 
     /**
      * @param $limit
@@ -114,7 +108,16 @@ class AdvertController extends Controller
             array('id' => 5, 'title' => 'Mission de webmaster'),
             array('id' => 9, 'title' => 'Offre de stage webdesigner')
         );
-
         return array('listAdverts' => $listAdverts);
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @Route("/contact", name="oc_platform_contact")
+     */
+    public function contactAction()
+    {
+        $this->addFlash('notice', 'La page de contact n’est pas encore disponible, merci de revenir plus tard.');
+        return $this->redirect('platform');
     }
 }
