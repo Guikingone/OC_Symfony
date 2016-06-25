@@ -1,4 +1,4 @@
-{% extends "CoreBundle::layout.html.twig" %}
+{% extends "PlatformBundle::layout.html.twig" %}
 
 {% block title %}
     Modifier une annonce - {{ parent() }}
@@ -8,14 +8,14 @@
 
     <h2>Ajouter une annonce</h2>
 
-    {{ include("CoreBundle::form.html.twig") }}
+    {{ include("PlatformBundle::form.html.twig") }}
 
     <p>
         Vous souhaitez ajouter une annonce ? Un peu de patience !
     </p>
 
     <p>
-        <a href="{{ path('oc_platform_home') }}" class="btn btn-default">
+        <a href="{{ path('home') }}" class="btn btn-default">
             <i class="glyphicon glyphicon-chevron-left"></i>
             Retour à la page d'accueil
         </a>

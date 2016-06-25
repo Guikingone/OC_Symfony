@@ -1,4 +1,7 @@
 core:
     resource: "@CoreBundle/Controller/"
     type:     annotation
-    prefix:   /
+
+platform:
+    resource: "@PlatformBundle/Controller/"
+    type:     annotation

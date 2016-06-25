@@ -1,53 +1,20 @@
 <?php
 
 
-namespace OC\CoreBundle\Controller;
+namespace OC\PlatformBundle\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/", name="home")
- */
 class AdvertController extends Controller
 {
-    /**
-     * @return array
-     * @Route("/platform", name="oc_platform_home")
-     * @Template("CoreBundle::index.html.twig")
-     */
-    public function indexAction()
-    {
-        $listAdverts = array(
-            array(
-                'title'   => 'Recherche développpeur Symfony',
-                'id'      => 1,
-                'author'  => 'Alexandre',
-                'content' => 'Nous recherchons un développeur Symfony débutant sur Lyon. Blabla…',
-                'date'    => new \Datetime()),
-            array(
-                'title'   => 'Mission de webmaster',
-                'id'      => 2,
-                'author'  => 'Hugo',
-                'content' => 'Nous recherchons un webmaster capable de maintenir notre site internet. Blabla…',
-                'date'    => new \Datetime()),
-            array(
-                'title'   => 'Offre de stage webdesigner',
-                'id'      => 3,
-                'author'  => 'Mathieu',
-                'content' => 'Nous proposons un poste pour webdesigner. Blabla…',
-                'date'    => new \Datetime())
-        );
-        return array('listAdverts' => $listAdverts);
-    }
-
     /**
      * @param $id
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/advert/{id}", name="oc_platform_view", requirements={"id": "\d+"})
-     * @Template("CoreBundle::view.html.twig")
+     * @Template("PlatformBundle::view.html.twig")
      */
     public function viewAction($id)
     {
@@ -64,7 +31,7 @@ class AdvertController extends Controller
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @Route("/add", name="oc_platform_add")
-     * @Template("CoreBundle::add.html.twig")
+     * @Template("PlatformBundle::add.html.twig")
      */
     public function addAction(){}
 
@@ -73,7 +40,7 @@ class AdvertController extends Controller
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @Route("/edit/{id}", name="oc_platform_edit", requirements={"id": "\d+"})
-     * @Template("CoreBundle::edit.html.twig")
+     * @Template("PlatformBundle::edit.html.twig")
      */
     public function editAction($id)
     {
@@ -92,14 +59,18 @@ class AdvertController extends Controller
      * @param $id
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/delete/{id}", name="oc_platform_delete", requirements={"id": "\d+"})
-     * @Template("CoreBundle::delete.html.twig")
+     * @Template("PlatformBundle::delete.html.twig")
      */
-    public function deleteAction($id){ return array('id' => $id); }
+    public function deleteAction($id)
+    {
+        $this->addFlash('notice', 'La suppression n\'est pas encore disponible, merci de réessayer ultérieurement.');
+        return array('id' => $id); 
+    }
 
     /**
      * @param $limit
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Template("CoreBundle::menu.html.twig")
+     * @Template("PlatformBundle::menu.html.twig")
      */
     public function menuAction()
     {
@@ -108,7 +79,7 @@ class AdvertController extends Controller
             array('id' => 5, 'title' => 'Mission de webmaster'),
             array('id' => 9, 'title' => 'Offre de stage webdesigner')
         );
-        return array('listAdverts' => $listAdverts);
+        return array( 'listAdverts' => $listAdverts );
     }
 
     /**
@@ -118,6 +89,6 @@ class AdvertController extends Controller
     public function contactAction()
     {
         $this->addFlash('notice', 'La page de contact n’est pas encore disponible, merci de revenir plus tard.');
-        return $this->redirect('platform');
+        return $this->redirectToRoute('home');
     }
 }
